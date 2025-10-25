@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 from parser import RobloxInstance, RBXMXParser
+from binary_parser import RBXBinaryParser
 
 
 class RojoConverter:
@@ -24,6 +25,7 @@ class RojoConverter:
         self.src_path = self.output_path / 'src'
         self.project_tree: Dict[str, any] = {}
         self.parser = RBXMXParser()
+        self.binary_parser = RBXBinaryParser()
     
     def convert(self, rbxmx_file: str) -> bool:
         """Convert RBXMX/RBXLX/RBXM/RBXL file to Rojo project"""
@@ -33,18 +35,12 @@ class RojoConverter:
             
             # Parse the file
             if file_ext in ['.rbxm', '.rbxl']:
-                # Binary format - try to parse with rbx_binary if available
+                # Try binary format
                 try:
-                    import rbx_binary
-                    with open(rbxmx_file, 'rb') as f:
-                        tree = rbx_binary.from_reader(f)
-                    root_instances = [tree.get_by_ref(ref) for ref in tree.root().children()]
-                except ImportError:
-                    raise Exception(
-                        "Binary format (.rbxm/.rbxl) requires 'rbx-binary' package.\n"
-                        "Install it with: pip install rbx-binary\n"
-                        "Or use XML format (.rbxmx/.rbxlx) instead."
-                    )
+                    root_instances = self.binary_parser.parse_file(rbxmx_file)
+                except NotImplementedError as e:
+                    # Binary parser not fully implemented yet
+                    raise Exception(str(e))
             else:
                 # XML format
                 root_instances = self.parser.parse_file(rbxmx_file)
@@ -63,7 +59,7 @@ class RojoConverter:
             return True
         except Exception as e:
             print(f"Conversion error: {str(e)}")
-            return False
+            raise
     
     def _process_instance(self, instance: RobloxInstance, base_path: Path) -> Optional[Dict]:
         """Process an instance and create appropriate files/folders"""

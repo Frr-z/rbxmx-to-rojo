@@ -175,10 +175,10 @@ After conversion:
 |--------|------|-------------|---------|
 | `.rbxmx` | Model (XML) | Roblox Model XML | ✅ Full Support |
 | `.rbxlx` | Place (XML) | Roblox Place XML | ✅ Full Support |
-| `.rbxm` | Model (Binary) | Roblox Model Binary | ⚠️ Requires rbx-binary |
-| `.rbxl` | Place (Binary) | Roblox Place Binary | ⚠️ Requires rbx-binary |
+| `.rbxm` | Model (Binary) | Roblox Model Binary | ❌ Not Supported * |
+| `.rbxl` | Place (Binary) | Roblox Place Binary | ❌ Not Supported * |
 
-**Recommended:** Use XML formats (`.rbxmx` or `.rbxlx`) for best compatibility.
+**\* Binary files:** Please export as XML format from Roblox Studio (File → Save As → choose .rbxmx or .rbxlx)
 
 ## What Gets Converted
 

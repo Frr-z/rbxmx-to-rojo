@@ -226,8 +226,8 @@ class ConverterApp:
                 "Error",
                 "An error occurred during conversion. "
                 "Make sure the file is valid and contains scripts.\n\n"
-                "For binary files (.rbxm/.rbxl), you may need to install:\n"
-                "pip install rbx-binary"
+                "Note: Binary files (.rbxm/.rbxl) are not currently supported.\n"
+                "Please export as XML (.rbxmx/.rbxlx) from Roblox Studio."
             )
     
     def _conversion_error(self, error_msg: str):
