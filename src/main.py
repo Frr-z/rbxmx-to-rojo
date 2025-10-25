@@ -1,5 +1,5 @@
 """
-RBXMX to Rojo Converter - GUI Application
+RBXMX/RBXLX/RBXM/RBXL to Rojo Converter - GUI Application
 """
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
@@ -14,7 +14,7 @@ class ConverterApp:
     
     def __init__(self, root):
         self.root = root
-        self.root.title("RBXMX to Rojo Converter")
+        self.root.title("Roblox to Rojo Converter")
         self.root.geometry("600x400")
         self.root.resizable(False, False)
         
@@ -37,14 +37,14 @@ class ConverterApp:
         
         title_label = ttk.Label(
             title_frame,
-            text="RBXMX to Rojo Converter",
+            text="Roblox to Rojo Converter",
             font=("Arial", 16, "bold")
         )
         title_label.pack()
         
         subtitle_label = ttk.Label(
             title_frame,
-            text="Convert RBXMX files to Rojo projects",
+            text="Convert RBXMX/RBXLX/RBXM/RBXL files to Rojo projects",
             font=("Arial", 10)
         )
         subtitle_label.pack()
@@ -54,7 +54,7 @@ class ConverterApp:
         content_frame.pack(fill=tk.BOTH, expand=True)
         
         # File selection section
-        file_section = ttk.LabelFrame(content_frame, text="RBXMX File", padding="10")
+        file_section = ttk.LabelFrame(content_frame, text="Roblox File (RBXMX/RBXLX/RBXM/RBXL)", padding="10")
         file_section.pack(fill=tk.X, pady=(0, 10))
         
         file_entry_frame = ttk.Frame(file_section)
@@ -143,9 +143,11 @@ class ConverterApp:
     def _select_file(self):
         """Open file dialog to select RBXMX file"""
         filename = filedialog.askopenfilename(
-            title="Select RBXMX file",
+            title="Select Roblox file",
             filetypes=[
-                ("Roblox Model Files", "*.rbxmx"),
+                ("All Roblox Files", "*.rbxmx;*.rbxlx;*.rbxm;*.rbxl"),
+                ("Roblox XML Files", "*.rbxmx;*.rbxlx"),
+                ("Roblox Binary Files", "*.rbxm;*.rbxl"),
                 ("All Files", "*.*")
             ]
         )
@@ -153,7 +155,7 @@ class ConverterApp:
         if filename:
             self.rbxmx_file.set(filename)
             self._update_convert_button()
-            self.status_text.set("RBXMX file selected. Now select output folder.")
+            self.status_text.set("Roblox file selected. Now select output folder.")
     
     def _select_output(self):
         """Open folder dialog to select output folder"""
@@ -223,7 +225,9 @@ class ConverterApp:
             messagebox.showerror(
                 "Error",
                 "An error occurred during conversion. "
-                "Make sure the RBXMX file is valid and contains scripts."
+                "Make sure the file is valid and contains scripts.\n\n"
+                "For binary files (.rbxm/.rbxl), you may need to install:\n"
+                "pip install rbx-binary"
             )
     
     def _conversion_error(self, error_msg: str):

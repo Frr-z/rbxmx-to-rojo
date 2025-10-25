@@ -1,11 +1,13 @@
 # RBXMX to Rojo Converter
 
-A desktop application to convert RBXMX (Roblox Model XML) files to Rojo projects.
+A desktop application to convert Roblox files (RBXMX, RBXLX, RBXM, RBXL) to Rojo projects.
 
 ## Features
 
-- 🎯 Convert RBXMX files to Rojo project structure
-- 📁 Automatically generates `.lua` files from scripts
+- 🎯 Convert Roblox files to Rojo project structure
+- 📁 Supports multiple formats: **RBXMX, RBXLX, RBXM, RBXL**
+- 🏗️ Handles both **models** and **entire place files**
+- 📝 Automatically generates `.lua` files from scripts
 - 🔧 Creates necessary `meta.json` files
 - 📦 Generates `default.project.json` for Rojo
 - 🖥️ User-friendly GUI interface
@@ -47,6 +49,9 @@ python -m pip install -r requirements.txt
 # Linux/macOS
 python3 -m pip install -r requirements.txt
 
+# Optional: For binary file support (.rbxm/.rbxl)
+python -m pip install rbx-binary
+
 # If you don't have pip:
 # Ubuntu/Debian: sudo apt install python3-pip
 # Fedora: sudo dnf install python3-pip
@@ -77,7 +82,7 @@ python3 src/main.py
 
 ### Steps to Convert
 
-1. Click "Select RBXMX File" and choose your `.rbxmx` file
+1. Click "Select File" and choose your Roblox file (`.rbxmx`, `.rbxlx`, `.rbxm`, or `.rbxl`)
 2. Click "Select Output Folder" to choose where the project will be created
 3. Click "Convert" and wait for completion
 4. Use the generated project with Rojo!
@@ -110,14 +115,27 @@ python3 build.py
 
 The executable will be created in the `dist/` folder.
 
-## How to Get RBXMX Files
+## How to Get Roblox Files
 
+### For Models:
 In Roblox Studio:
 1. Open your game/place
 2. Select the model you want to export
 3. Go to **File → Save to File As...**
-4. Choose **"Model Files (*.rbxmx)"**
-5. Save the file
+4. Choose format:
+   - **"Model Files (*.rbxmx)"** - XML format (recommended)
+   - **"Model Files (*.rbxm)"** - Binary format
+
+### For Entire Places:
+In Roblox Studio:
+1. Open your place/game
+2. Go to **File → Save to File As...**
+3. Choose format:
+   - **"Place Files (*.rbxlx)"** - XML format (recommended)
+   - **"Place Files (*.rbxl)"** - Binary format
+4. Save the file
+
+**Note:** XML formats (`.rbxmx`, `.rbxlx`) work out of the box. Binary formats (`.rbxm`, `.rbxl`) require the `rbx-binary` package.
 
 ## Project Structure Output
 
@@ -153,8 +171,14 @@ After conversion:
 
 ## Supported Formats
 
-- `.rbxmx` - Roblox Model XML (recommended)
-- `.rbxlx` - Roblox Place XML (also works)
+| Format | Type | Description | Support |
+|--------|------|-------------|---------|
+| `.rbxmx` | Model (XML) | Roblox Model XML | ✅ Full Support |
+| `.rbxlx` | Place (XML) | Roblox Place XML | ✅ Full Support |
+| `.rbxm` | Model (Binary) | Roblox Model Binary | ⚠️ Requires rbx-binary |
+| `.rbxl` | Place (Binary) | Roblox Place Binary | ⚠️ Requires rbx-binary |
+
+**Recommended:** Use XML formats (`.rbxmx` or `.rbxlx`) for best compatibility.
 
 ## What Gets Converted
 
@@ -200,10 +224,11 @@ Contributions are welcome! Feel free to:
 ## Support
 
 If you encounter any issues:
-1. Check that your RBXMX file contains scripts
+1. Check that your file contains scripts
 2. Ensure Python 3.8+ is installed
-3. Try the example file in `examples/example.rbxmx`
-4. Open an issue on GitHub with details
+3. For binary files (`.rbxm`/`.rbxl`), install: `pip install rbx-binary`
+4. Try the example file in `examples/example.rbxmx`
+5. Open an issue on GitHub with details
 
 ## Star History
 

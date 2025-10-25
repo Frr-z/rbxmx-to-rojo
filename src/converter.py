@@ -1,5 +1,5 @@
 """
-Rojo Converter - Converts parsed RBXMX instances to Rojo project structure
+Rojo Converter - Converts parsed RBXMX/RBXLX/RBXM/RBXL instances to Rojo project structure
 """
 import os
 import json
@@ -9,7 +9,7 @@ from parser import RobloxInstance, RBXMXParser
 
 
 class RojoConverter:
-    """Converts RBXMX instances to Rojo project structure"""
+    """Converts RBXMX/RBXLX/RBXM/RBXL instances to Rojo project structure"""
     
     SCRIPT_CLASSES = {'Script', 'LocalScript', 'ModuleScript'}
     RESPECTED_SERVICES = {
@@ -26,10 +26,28 @@ class RojoConverter:
         self.parser = RBXMXParser()
     
     def convert(self, rbxmx_file: str) -> bool:
-        """Convert RBXMX file to Rojo project"""
+        """Convert RBXMX/RBXLX/RBXM/RBXL file to Rojo project"""
         try:
+            # Determine file type
+            file_ext = Path(rbxmx_file).suffix.lower()
+            
             # Parse the file
-            root_instances = self.parser.parse_file(rbxmx_file)
+            if file_ext in ['.rbxm', '.rbxl']:
+                # Binary format - try to parse with rbx_binary if available
+                try:
+                    import rbx_binary
+                    with open(rbxmx_file, 'rb') as f:
+                        tree = rbx_binary.from_reader(f)
+                    root_instances = [tree.get_by_ref(ref) for ref in tree.root().children()]
+                except ImportError:
+                    raise Exception(
+                        "Binary format (.rbxm/.rbxl) requires 'rbx-binary' package.\n"
+                        "Install it with: pip install rbx-binary\n"
+                        "Or use XML format (.rbxmx/.rbxlx) instead."
+                    )
+            else:
+                # XML format
+                root_instances = self.parser.parse_file(rbxmx_file)
             
             # Create output directories
             self.output_path.mkdir(parents=True, exist_ok=True)

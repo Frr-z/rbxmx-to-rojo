@@ -1,2 +1,6 @@
 pyinstaller>=5.0.0
 pillow>=9.0.0
+
+# Optional: For binary file support (.rbxm/.rbxl)
+# Uncomment the line below if you want to convert binary files
+# rbx-binary>=0.7.0

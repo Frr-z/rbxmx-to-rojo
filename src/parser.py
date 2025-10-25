@@ -1,5 +1,5 @@
 """
-RBXMX Parser - Parses Roblox XML files and extracts instances
+RBXMX/RBXLX Parser - Parses Roblox XML files and extracts instances
 """
 import xml.etree.ElementTree as ET
 from typing import Dict, List, Optional, Any
@@ -18,7 +18,7 @@ class RobloxInstance:
 
 
 class RBXMXParser:
-    """Parser for RBXMX (Roblox Model XML) files"""
+    """Parser for RBXMX/RBXLX (Roblox XML) files"""
     
     SCRIPT_CLASSES = {'Script', 'LocalScript', 'ModuleScript'}
     
@@ -27,7 +27,7 @@ class RBXMXParser:
         self.root_instances: List[RobloxInstance] = []
     
     def parse_file(self, file_path: str) -> List[RobloxInstance]:
-        """Parse RBXMX file and return root instances"""
+        """Parse RBXMX/RBXLX file and return root instances"""
         try:
             tree = ET.parse(file_path)
             root = tree.getroot()
