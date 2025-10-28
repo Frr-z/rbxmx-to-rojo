@@ -1,6 +1,7 @@
 # RBXMX to Rojo Converter
 
-A desktop application to convert Roblox files (RBXMX, RBXLX, RBXM, RBXL) to Rojo projects.
+A desktop application to convert Roblox files (RBXMX, RBXLX, RBXM, RBXL) to Rojo projects. Made with Github Copilot. 
+*P.S.: at the moment it only works with RBXMX 
 
 ## Features
 
@@ -12,6 +13,7 @@ A desktop application to convert Roblox files (RBXMX, RBXLX, RBXM, RBXL) to Rojo
 - 📦 Generates `default.project.json` for Rojo
 - 🖥️ User-friendly GUI interface
 - ⚡ Fast conversion process
+- 
 
 ## Installation
 
